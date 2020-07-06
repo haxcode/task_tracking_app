@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'src/app/view/daily_page.dart';
 void main() {
   runApp(MyApp());
 }
-//TODO new directories for MODEL / VIEW / CONTROLLER
+
 //TODO GUI new DailyPageView with daily task - list of tasks / button "new task"
 //TODO GUI SummaryTaskView single task presentation layer
 //TODO GUI CreateTaskView single task presentation layer with modification
