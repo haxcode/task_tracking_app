@@ -4,22 +4,13 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:task_tracking_app/src/inf/persistence.dart';
 
-class TodoEntity implements Persistence {
-  @override
-  Database database;
+class TodoEntity extends Persistence {
 
   @override
-  void setUp()  {
-    WidgetsFlutterBinding.ensureInitialized();
-     this.database = openDatabase(
-      join(await getDatabasesPath(), 'time_tracking_app_database.db'),
-      onCreate: (db, version) {
+  Future<void> createTable(Database db)  {
         return db.execute(
           "CREATE TABLE todo(id INTEGER PRIMARY KEY, title TEXT, description TEXT)",
         );
-      },
-      version: 1,
-    );
   }
 
   Future<void> insertDog(Dog dog) async {
