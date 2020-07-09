@@ -13,6 +13,7 @@ class TodoListState extends State<TodoList> {
     // Putting our code inside "setState" tells the app that our state has changed, and
     // it will automatically re-render the list
     if(task.length > 0){
+
       setState(() => _todoItems.add(task));
     }
   }
@@ -43,16 +44,18 @@ class TodoListState extends State<TodoList> {
                       title: new Text('Add a new task')
                   ),
                   body: new TextField(
-                    autofocus: true,
-                    onSubmitted: (val) {
-                      _addTodoItem(val);
-                      Navigator.pop(context); // Close the add todo screen
-                    },
-                    decoration: new InputDecoration(
-                        hintText: 'Enter something to do...',
-                        contentPadding: const EdgeInsets.all(16.0)
-                    ),
-                  )
+                        autofocus: true,
+                        onSubmitted: (val) {
+                          _addTodoItem(val);
+                          Navigator.pop(context); // Close the add todo screen
+                        },
+                        decoration: new InputDecoration(
+                            hintText: 'Title of your task',
+                            contentPadding: const EdgeInsets.all(16.0)
+
+                        ),
+
+                      )
               );
             }
         )
