@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_tracking_app/src/app/view/todo_list.dart';
 
 
 class MainView extends StatelessWidget {
@@ -9,14 +10,13 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: Center(child: Text('New View')),
+      body: TodoList(),
       drawer: Drawer(
         child: ListView(
-          // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text('Drawer Header'),
+              child: Text(title),
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),

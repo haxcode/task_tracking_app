@@ -72,8 +72,18 @@ class TodoListState extends State<TodoList> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-          title: new Text('Todo List')
+      appBar:  PreferredSize(
+          preferredSize: Size.fromHeight(30),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+            child: AppBar( // Here we create one to set status bar color
+              backgroundColor: Colors.transparent,
+              title: Text('Daily tasks', style:TextStyle(color: Colors.grey[700], fontSize: 17)),
+              elevation:0.0 ,
+              toolbarOpacity: 0.0,
+              bottomOpacity: 0.0,
+            ),
+          )
       ),
       body: _buildTodoList(),
       floatingActionButton: new FloatingActionButton(
