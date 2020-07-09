@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:task_tracking_app/src/app/view/todo_list.dart';
 
-
 class MainView extends StatelessWidget {
   final String title;
+
   const MainView({Key key, this.title}) : super(key: key);
 
   @override
@@ -16,10 +16,13 @@ class MainView extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text(title),
-              decoration: BoxDecoration(
-                color: Colors.blue,
+              child: Icon(
+                Icons.timer,
+                color: Colors.white,
+                size: 100,
               ),
+              decoration: BoxDecoration(
+                  shape: BoxShape.rectangle, color: Colors.blueAccent),
             ),
             ListTile(
               title: Text('Item 1'),
@@ -41,11 +44,7 @@ class MainView extends StatelessWidget {
             ),
           ],
         ),
-
       ),
-
     );
-
   }
-
 }
