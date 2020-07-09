@@ -68,12 +68,12 @@ class TodoListState extends State<TodoList> {
             foregroundColor: Colors.white,
           ),
           title: Text(todoText),
-          subtitle: Text('SlidableDrawerDelegate'),
+          //subtitle: Text('Task'),
         ),
       ),
       actions: <Widget>[
         IconSlideAction(
-          caption: 'timer',
+          caption: 'Start',
           color: Colors.blue,
           icon: Icons.timer,
           //onTap: () => _showSnackBar('Archive'),
@@ -81,9 +81,9 @@ class TodoListState extends State<TodoList> {
       ],
       secondaryActions: <Widget>[
         IconSlideAction(
-          caption: 'Delete',
-          color: Colors.red,
-          icon: Icons.delete,
+          caption: 'Done',
+          color: Colors.green,
+          icon: Icons.assignment_turned_in,
           //onTap: () => _showSnackBar('More'),
         ),
         IconSlideAction(
