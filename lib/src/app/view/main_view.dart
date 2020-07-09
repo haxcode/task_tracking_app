@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:task_tracking_app/src/app/view/todo_list.dart';
+import 'package:task_tracking_app/src/app/view/task/todo_list.dart';
+
 
 class MainView extends StatelessWidget {
   final String title;
@@ -9,7 +10,7 @@ class MainView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(title: Text(title),backgroundColor: Colors.blueAccent,),
       body: TodoList(),
       drawer: Drawer(
         child: ListView(
@@ -25,7 +26,7 @@ class MainView extends StatelessWidget {
                   shape: BoxShape.rectangle, color: Colors.blueAccent),
             ),
             ListTile(
-              title: Text('Item 1'),
+              title: Text('Daily'),
               onTap: () {
                 // Update the state of the app
                 // ...
@@ -34,7 +35,25 @@ class MainView extends StatelessWidget {
               },
             ),
             ListTile(
-              title: Text('Item 2'),
+              title: Text('Backlog'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Done'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Work Time'),
               onTap: () {
                 // Update the state of the app
                 // ...
