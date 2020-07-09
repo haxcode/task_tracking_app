@@ -1,29 +1,47 @@
 import 'dart:async';
-
+import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
 
-abstract class Persistence {
-  static final String _databaseName = 'time_tracking_app_database.db';
-  static final int _databaseVersion = 1;
-  static Database _database;
+class Persistence {
 
-  Persistence._private();
+  static Database _db;
+
+  String _databaseName = "task_tracking_database.db";
+
+  int _databaseVersion = 1;
+
 
   Future<Database> get database async {
-    if (_database != null) return _database;
-
-    // if _database is null we instantiate it
-    _database = await initDB();
-    return _database;
+    if (_db != null) return _db;
+    // lazily instantiate the db the first time it is accessed
+    _db = await _initDatabase();
+    return _db;
   }
 
-  initDB() async {
-    String path = join(_databaseName);
-    return await openDatabase(path, version: _databaseVersion, onOpen: (db) {},
-        onCreate: (Database db, int version) async {
-          createTable(db);
-    });
+  _initDatabase() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, _databaseName);
+    return await openDatabase(path,
+        version: _databaseVersion,
+        onCreate: _create);
   }
-  Future<void> createTable(Database db);
+
+
+  Future create() async {
+    Directory path = await getApplicationDocumentsDirectory();
+    String dbPath = join(path.path, );
+
+    _db = await openDatabase(dbPath, version: 1);
+  }
+
+  Future _create(Database db, int version) async {
+    await db.execute("""
+            CREATE TABLE todo (
+              id INTEGER PRIMARY KEY, 
+              title TEXT NOT NULL,
+              description TEXT,
+            )""");
+  }
 }

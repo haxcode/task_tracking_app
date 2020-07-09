@@ -1,19 +1,10 @@
-import 'package:flutter/widgets.dart';
-
-import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:task_tracking_app/src/app/model/todo.dart';
 import 'package:task_tracking_app/src/inf/persistence.dart';
 
 class TodoEntity extends Persistence {
 
-  @override
-  Future<void> createTable(Database db)  {
-        return db.execute(
-          "CREATE TABLE todo(id INTEGER PRIMARY KEY, title TEXT, description TEXT)",
-        );
-  }
-
-  Future<void> insertDog(Dog dog) async {
+  Future<void> insert(Todo todo) async {
     // Get a reference to the database.
     final Database db = await database;
 
@@ -21,71 +12,54 @@ class TodoEntity extends Persistence {
     // `conflictAlgorithm`. In this case, if the same dog is inserted
     // multiple times, it replaces the previous data.
     await db.insert(
-      'dogs',
-      dog.toMap(),
+      'todo',
+      todo.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  Future<List<Dog>> dogs() async {
+  Future<List<Todo>> todo() async {
     // Get a reference to the database.
     final Database db = await database;
 
-    // Query the table for all The Dogs.
-    final List<Map<String, dynamic>> maps = await db.query('dogs');
+    // Query the table for all The todo.
+    final List<Map<String, dynamic>> maps = await db.query('todo');
 
-    // Convert the List<Map<String, dynamic> into a List<Dog>.
+    // Convert the List<Map<String, dynamic> into a List<Todo>.
     return List.generate(maps.length, (i) {
-      return Dog(
+      return Todo(
         id: maps[i]['id'],
-        name: maps[i]['name'],
-        age: maps[i]['age'],
+        title: maps[i]['title'],
+        description: maps[i]['description'],
       );
     });
   }
 
-  Future<void> updateDog(Dog dog) async {
+  Future<void> update(Todo todo) async {
     // Get a reference to the database.
     final db = await database;
 
     // Update the given Dog.
     await db.update(
-      'dogs',
-      dog.toMap(),
+      'todo',
+      todo.toMap(),
       // Ensure that the Dog has a matching id.
       where: "id = ?",
       // Pass the Dog's id as a whereArg to prevent SQL injection.
-      whereArgs: [dog.id],
+      whereArgs: [todo.id],
     );
   }
 
-  Future<void> deleteDog(int id) async {
+  Future<void> delete(int id) async {
     // Get a reference to the database.
     final db = await database;
 
     // Remove the Dog from the database.
     await db.delete(
-      'dogs',
-      // Use a `where` clause to delete a specific dog.
+      'todo',
       where: "id = ?",
-      // Pass the Dog's id as a whereArg to prevent SQL injection.
+
       whereArgs: [id],
     );
   }
-
-  @override
-  void createTable() {
-    // TODO: implement createTable
-  }
-
-  @override
-  initDB() {
-    // TODO: implement initDB
-    throw UnimplementedError();
-  }
-
-
-
-
-
 }

@@ -1,5 +1,4 @@
 
-
 class Todo {
 
   final int id;
@@ -7,5 +6,14 @@ class Todo {
   final String description;
 
   Todo({this.id, this.title, this.description});
+
+  Map<String, dynamic> toMap() {
+    return  {
+      "id": id,
+      "title":title,
+      "description":description,
+    };
+  }
+
 
 }
