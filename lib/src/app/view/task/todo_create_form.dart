@@ -1,49 +1,45 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
-class TodoCreateForm extends StatefulWidget {
-  @override
-  TodoCreateFormState createState() {
-    return TodoCreateFormState();
-  }
-}
-class TodoCreateFormState extends State<TodoCreateForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
+class TodoCreateForm extends StatelessWidget {
+  static const routeName = '/createTodoForm';
+
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text('Add a new task'),
+        backgroundColor: Colors.blueAccent,
+      ),
+      body: new Column(
         children: <Widget>[
-          TextFormField(
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: RaisedButton(
-              onPressed: () {
-                // Validate returns true if the form is valid, or false
-                // otherwise.
-                if (_formKey.currentState.validate()) {
-                  // If the form is valid, display a Snackbar.
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
-                }
-              },
-              child: Text('Submit'),
+          new ListTile(
+            title: new TextField(
+              decoration: new InputDecoration(
+                labelText: "Title",
+              ),
             ),
+            autofocus: true,
+          ),
+          new ListTile(
+            title: new TextField(
+              decoration: new InputDecoration(
+                  labelText: "Description"),
+            ),
+          ),
+          new ListTile(
+            title: new TextField(
+
+              decoration: new InputDecoration(
+                  labelText: "Estimated time"),
+            ),
+          ),
+          const Divider(
+            height: 1.0,
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_tracking_app/src/app/view/task/todo_create_form.dart';
 import 'package:task_tracking_app/src/app/view/task/todo_list.dart';
 
 
@@ -15,7 +16,7 @@ class MainView extends StatelessWidget {
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
-          children: <Widget>[
+          children: <Widget> [
             DrawerHeader(
               child: Icon(
                 Icons.timer,
@@ -23,7 +24,9 @@ class MainView extends StatelessWidget {
                 size: 100,
               ),
               decoration: BoxDecoration(
-                  shape: BoxShape.rectangle, color: Colors.blueAccent),
+                  shape: BoxShape.rectangle,
+                  color: Colors.blueAccent
+              ),
             ),
             ListTile(
               title: Text('Daily'),
@@ -37,10 +40,8 @@ class MainView extends StatelessWidget {
             ListTile(
               title: Text('Backlog'),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
+             
+//                Navigator.pop(context);
               },
             ),
             ListTile(

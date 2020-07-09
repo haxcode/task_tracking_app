@@ -33,26 +33,6 @@ class TodoListState extends State<TodoList> {
     );
   }
 
-  void _createAddTodoScreen() {
-    // Push this page onto the stack
-    Navigator.of(context).push(
-        // MaterialPageRoute will automatically animate the screen entry, as well
-        // as adding a back button to close it
-        new MaterialPageRoute(builder: (context) {
-      return new Scaffold(
-          appBar: new AppBar(title: new Text('Add a new task')),
-          body: new TextField(
-            autofocus: true,
-            onSubmitted: (val) {
-              _addTodoItem(val);
-              Navigator.pop(context); // Close the add todo screen
-            },
-            decoration: new InputDecoration(
-                hintText: 'Title of your task',
-                contentPadding: const EdgeInsets.all(16.0)),
-          ));
-    }));
-  }
 
   // Build a single todo item
   Widget _buildTodoItem(String todoText) {
@@ -118,7 +98,10 @@ class TodoListState extends State<TodoList> {
           )),
       body: _buildTodoList(),
       floatingActionButton: new FloatingActionButton(
-        onPressed: _createAddTodoScreen,
+        onPressed: (){   Navigator.pushNamed(
+          context,
+          TodoCreateForm.routeName,
+        );},
         tooltip: 'Add task',
         child: new Icon(Icons.add),
         backgroundColor: Colors.blueAccent,
