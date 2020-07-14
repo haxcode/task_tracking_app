@@ -4,14 +4,16 @@ import 'package:task_tracking_app/src/app/view/task/todo_list.dart';
 
 
 class MainView extends StatelessWidget {
-  final String title;
+  static const routeName = '/daily';
+  final String title = "Task tracking app";
 
-  const MainView({Key key, this.title}) : super(key: key);
+  const MainView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title),backgroundColor: Colors.blueAccent,),
+      appBar: AppBar(title: Text(title),
+        backgroundColor: Colors.blueAccent,),
       body: TodoList(),
       drawer: Drawer(
         child: ListView(
