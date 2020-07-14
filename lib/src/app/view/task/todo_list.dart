@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:task_tracking_app/src/app/model/entity/todo_entity.dart';
+import 'package:task_tracking_app/src/app/model/todo.dart';
 import 'package:task_tracking_app/src/app/view/task/todo_create_form.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -10,34 +12,49 @@ class TodoList extends StatefulWidget {
 }
 
 class TodoListState extends State<TodoList> {
-  List<String> _todoItems = [];
+
+  Future<List<Todo>> todos;
+
+  @override
+  void initState() {
+    super.initState();
+    TodoEntity _todoEntity = new TodoEntity();
+
+    todos = _todoEntity.todo();
+  }
+
 
   // This will be called each time the + button is pressed
-  void _addTodoItem(String task) {
-    // Putting our code inside "setState" tells the app that our state has changed, and
-    // it will automatically re-render the list
-    if (task.length > 0) {
-      setState(() => _todoItems.add(task));
-    }
-  }
 
   // Build the whole list of todo items
   Widget _buildTodoList() {
-    return new ListView.builder(
-      itemBuilder: (context, index) {
-        // itemBuilder will be automatically be called as many times as it takes for the
-        // list to fill up its available space, which is most likely more than the
-        // number of todo items we have. So, we need to check the index is OK.
-        if (index < _todoItems.length) {
-          return _buildTodoItem(_todoItems[index]);
+    return new FutureBuilder<List<Todo>>(
+      future: todos,
+      builder: (context, todoSnap ) {
+        switch (todoSnap.connectionState) {
+          case ConnectionState.waiting: return new Text('Loading....');
+          default:
+            if (todoSnap.hasError)
+              return new Text('Error: ${todoSnap.error}');
+            else
+              return  _listView(todoSnap.data);
         }
+
       },
     );
   }
 
+  Widget _listView(List<Todo> todoData){
+    return new ListView.builder(
+        itemCount: todoData.length,
+        itemBuilder: (context, index) {
+          return _buildTodoItem(todoData[index]);
+        }
+      );
+  }
 
   // Build a single todo item
-  Widget _buildTodoItem(String todoText) {
+  Widget _buildTodoItem(Todo todo) {
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
       actionExtentRatio: 0.25,
@@ -46,11 +63,11 @@ class TodoListState extends State<TodoList> {
         child: ListTile(
           leading: CircleAvatar(
             backgroundColor: Colors.indigoAccent,
-            child: Text('Task'),
+            child: Text('T'),
             foregroundColor: Colors.white,
           ),
-          title: Text(todoText),
-          //subtitle: Text('Task'),
+          title: Text(todo.title.toString()),
+          subtitle: Text(todo.description.toString()),
         ),
       ),
       actions: <Widget>[
