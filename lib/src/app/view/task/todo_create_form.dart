@@ -4,20 +4,22 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:task_tracking_app/src/app/controller/todo_Item.dart';
 import 'package:task_tracking_app/src/app/model/entity/todo_entity.dart';
+import 'package:task_tracking_app/src/app/model/todo.dart';
 import 'package:task_tracking_app/src/app/view/main_view.dart';
 import 'package:task_tracking_app/src/app/view/task/todo_list.dart';
 
-
 class TodoCreateForm extends StatefulWidget {
   static const routeName = '/createTodoForm';
+
   TodoCreateForm({Key key}) : super(key: key);
+
   @override
   TodoCreateFormState createState() {
     return TodoCreateFormState();
   }
 }
 
-class TodoCreateFormState extends State<TodoCreateForm>{
+class TodoCreateFormState extends State<TodoCreateForm> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _estimatedTimeController = TextEditingController();
@@ -29,13 +31,14 @@ class TodoCreateFormState extends State<TodoCreateForm>{
         title: new Text('Add a new task'),
         backgroundColor: Colors.blueAccent,
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.check),
+          IconButton(
+            icon: Icon(Icons.check),
             onPressed: () {
               this.addTask();
-            },),
+            },
+          ),
         ],
       ),
-
       body: new Column(
         children: <Widget>[
           new ListTile(
@@ -68,11 +71,14 @@ class TodoCreateFormState extends State<TodoCreateForm>{
   }
 
   void addTask() {
-    developer.log(_titleController.text);
-    developer.log(_descriptionController.text);
-    developer.log(_estimatedTimeController.text);
+    Todo todo = new Todo(
+        title: _titleController.text,
+        description: _descriptionController.text,
+        estimatedTime: _estimatedTimeController.text);
+    TodoEntity te = new TodoEntity();
+    te.insert(todo);
+
+    developer.log('saved to DB');
     Navigator.pushNamed(context, MainView.routeName);
   }
 }
-
-

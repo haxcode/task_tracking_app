@@ -42,6 +42,7 @@ class Persistence {
               id INTEGER PRIMARY KEY, 
               title TEXT NOT NULL,
               description TEXT,
+              estimatedTime TEXT
             )""");
   }
 }

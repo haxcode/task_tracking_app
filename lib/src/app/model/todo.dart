@@ -6,7 +6,7 @@ class Todo {
   final int id;
   final String title;
   final String description;
-  final TimeOfDayFormat estimatedTime;
+  final String estimatedTime;
 
   Todo({this.id, this.title, this.description, this.estimatedTime});
 
