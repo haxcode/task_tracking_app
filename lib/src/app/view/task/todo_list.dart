@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:task_tracking_app/src/app/model/entity/todo_entity.dart';
 import 'package:task_tracking_app/src/app/model/todo.dart';
+import 'package:task_tracking_app/src/app/view/main_view.dart';
 import 'package:task_tracking_app/src/app/view/task/todo_create_form.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:task_tracking_app/src/app/view/task/todo_form.dart';
 
 class TodoList extends StatefulWidget {
 
@@ -12,13 +14,13 @@ class TodoList extends StatefulWidget {
 }
 
 class TodoListState extends State<TodoList> {
+  TodoEntity _todoEntity = new TodoEntity();
 
   Future<List<Todo>> todos;
 
   @override
   void initState() {
     super.initState();
-    TodoEntity _todoEntity = new TodoEntity();
 
     todos = _todoEntity.todo();
   }
@@ -61,11 +63,15 @@ class TodoListState extends State<TodoList> {
       child: Container(
         color: Colors.white,
         child: ListTile(
+          onTap: () => {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => TodoForm(todo)))
+          },
           leading: CircleAvatar(
-            backgroundColor: Colors.indigoAccent,
-            child: Text('T'),
+            backgroundColor: Colors.blueAccent,
+            child: Text(todo.id.toString()), // Icon(Icons.today),
             foregroundColor: Colors.white,
           ),
+          trailing: Text(todo.estimatedTime.toLowerCase()),
           title: Text(todo.title.toString()),
           subtitle: Text(todo.description.toString()),
         ),
@@ -86,10 +92,13 @@ class TodoListState extends State<TodoList> {
           //onTap: () => _showSnackBar('More'),
         ),
         IconSlideAction(
-          caption: 'More',
-          color: Colors.black45,
-          icon: Icons.more_horiz,
-          //onTap: () => _showSnackBar('Delete'),
+          caption: 'Delete',
+          color: Colors.redAccent,
+          icon: Icons.delete_outline,
+          onTap: () => {
+            _todoEntity.delete(todo.id),
+            Navigator.pushNamed(context, MainView.routeName)
+          },
         ),
       ],
     );
