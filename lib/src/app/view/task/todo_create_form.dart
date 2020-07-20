@@ -1,5 +1,4 @@
 import 'dart:developer' as developer;
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:task_tracking_app/src/app/controller/todo_Item.dart';
@@ -48,7 +47,7 @@ class TodoCreateFormState extends State<TodoCreateForm> {
               ),
               controller: _titleController,
             ),
-            autofocus: true,
+            //autofocus: true,
           ),
           new ListTile(
             title: new TextField(
