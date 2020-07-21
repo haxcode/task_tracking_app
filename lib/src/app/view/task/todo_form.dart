@@ -76,7 +76,9 @@ class TodoForm extends StatelessWidget {
             height: 1.0,
           ),
           new FloatingActionButton(
-            backgroundColor: Colors.green, child: Icon(Icons.done))
+            backgroundColor: Colors.green, child: Icon(Icons.done),
+            onPressed: this.markAsDone(),
+          )
         ],
       ),
     );
@@ -97,5 +99,9 @@ class TodoForm extends StatelessWidget {
 //
 //    developer.log('saved to DB');
 //    Navigator.pushNamed(context, MainView.routeName);
+  }
+
+  markAsDone() {
+    //TODO implement save task as done in model, think about use controler on task to erform this action.
   }
 }
