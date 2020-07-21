@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_tracking_app/src/app/view/task/about.dart';
 import 'package:task_tracking_app/src/app/view/task/todo_create_form.dart';
 import 'package:task_tracking_app/src/app/view/task/todo_list.dart';
 
@@ -63,6 +64,16 @@ class MainView extends StatelessWidget {
                 // Then close the drawer
                 Navigator.pop(context);
               },
+            ),
+              ListTile(
+                title: Text('About'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+               Navigator.push(context, MaterialPageRoute(builder: (context) => About()),);
+               //Navigator.pop(context);
+                },
             ),
           ],
         ),

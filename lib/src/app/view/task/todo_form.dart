@@ -1,6 +1,3 @@
-import 'dart:developer' as developer;
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -59,7 +56,7 @@ class TodoForm extends StatelessWidget {
               ),
               controller: _titleController,
             ),
-            autofocus: true,
+            //autofocus: true,
           ),
           new ListTile(
             title: new TextField(
