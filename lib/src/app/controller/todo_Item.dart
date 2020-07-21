@@ -9,6 +9,15 @@ class TodoItem {
     db.insert(todo);
   }
 
+  static void deleteTodo(Todo todo) {
+    TodoEntity db = new TodoEntity();
+    db.delete(todo.id);
+  }
+
+
+  //todo add full crud hear
+
+
 
 
 }

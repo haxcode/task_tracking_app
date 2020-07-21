@@ -9,7 +9,7 @@ class Persistence {
   static Database _db;
 
   String _databaseName = "task_tracking_database.db";
-
+ // TODO change hear
   int _databaseVersion = 1;
 
 
@@ -32,7 +32,7 @@ class Persistence {
   Future create() async {
     Directory path = await getApplicationDocumentsDirectory();
     String dbPath = join(path.path, );
-
+//todo change version if add new table
     _db = await openDatabase(dbPath, version: 1);
   }
 
@@ -42,7 +42,15 @@ class Persistence {
               id INTEGER PRIMARY KEY, 
               title TEXT NOT NULL,
               description TEXT,
-              estimatedTime TEXT
+              estimatedTime TEXT,
+              done BOOLEAN default FALSE
             )""");
+//TODO add definition of table
+//    await db.execute("""
+//            CREATE TABLE work_time (
+//               hear this same add definition of table to register time
+//               start time, stop time, reference to todo,
+//            )""");
+
   }
 }

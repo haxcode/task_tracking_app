@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_tracking_app/src/app/controller/todo_Item.dart';
 import 'package:task_tracking_app/src/app/model/entity/todo_entity.dart';
 import 'package:task_tracking_app/src/app/model/todo.dart';
 import 'package:task_tracking_app/src/app/view/main_view.dart';
@@ -96,7 +97,7 @@ class TodoListState extends State<TodoList> {
           color: Colors.redAccent,
           icon: Icons.delete_outline,
           onTap: () => {
-            _todoEntity.delete(todo.id),
+            TodoItem.deleteTodo(todo),
             Navigator.pushNamed(context, MainView.routeName)
           },
         ),

@@ -75,6 +75,8 @@ class TodoForm extends StatelessWidget {
           const Divider(
             height: 1.0,
           ),
+
+          // todo write own widget and add hear.
           new FloatingActionButton(
             backgroundColor: Colors.green, child: Icon(Icons.done),
             onPressed: this.markAsDone(),
@@ -89,6 +91,8 @@ class TodoForm extends StatelessWidget {
   }
 
   void updateTask() {
+    //TODO implement method to update entity in dataBase use controller.
+
 //    Todo todo = new Todo(
 //        id: this._id,
 //        title: _titleController.text,
