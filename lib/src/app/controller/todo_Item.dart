@@ -14,7 +14,15 @@ class TodoItem {
     db.delete(todo.id);
   }
 
+  static void updateTodo(Todo todo) {
+    TodoEntity db = new TodoEntity();
+    db.update(todo);
+  }
 
+  static void readTodo(Todo todo) {
+    TodoEntity db = new TodoEntity();
+    db.read(todo.id);
+  }
   //todo add full crud hear
 
 

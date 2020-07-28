@@ -64,4 +64,15 @@ class TodoEntity extends Persistence {
       whereArgs: [id],
     );
   }
+
+  Future<void> read(int id) async {
+    final db = await database;
+
+    //await db.read(
+    //  'todo',
+    //  where: "id = ?",
+//
+   //   whereArgs: [id],
+   // );
+  }
 }
