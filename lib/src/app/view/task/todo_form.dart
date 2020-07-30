@@ -106,6 +106,6 @@ class TodoForm extends StatelessWidget {
   }
 
   markAsDone() {
-    //TODO implement save task as done in model, think about use controler on task to erform this action.
+    //TODO implement save task as done in model, think about use controler on task to perform this action.
   }
 }
