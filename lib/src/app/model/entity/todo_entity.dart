@@ -32,9 +32,25 @@ class TodoEntity extends Persistence {
         title: maps[i]['title'],
         description: maps[i]['description'],
         estimatedTime: maps[i]['estimatedTime'],
+        startTime: maps[i]['startTime'],
+        stopTime: maps[i]['stopTime'],
+        done: maps[i]['done'],
       );
     });
   }
+
+//  final List<Map<String, dynamic>> maps = await db.query('work_time');
+//
+//  // Convert the List<Map<String, dynamic> into a List<Todo>.
+//  return List.generate(maps.length, (i) {
+//  return Work_time(
+//  id: maps[i]['id'],
+//  startTime: maps[i]['startTime'],
+//  stopTime: maps[i]['stopTime'],
+//  done: maps[i]['done'],
+//  );
+//  });
+//}
 
   Future<void> update(Todo todo) async {
     // Get a reference to the database.
@@ -70,8 +86,8 @@ class TodoEntity extends Persistence {
     //await db.read(
     //  'todo',
     //  where: "id = ?",
-//
-   //   whereArgs: [id],
-   // );
+
+     // whereArgs: [id],
+    //);
   }
 }

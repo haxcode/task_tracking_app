@@ -1,33 +1,26 @@
+import 'dart:developer' as developer;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:task_tracking_app/src/app/model/todo.dart';
-enum FormState {
-  create,
-  read,
-  update,
-  delete
-}
+import 'package:task_tracking_app/src/app/model/entity/todo_entity.dart';
+
+enum FormState { create, read, update, delete }
 
 //TODO merge this with todo createForm in one with state management
 class TodoForm extends StatelessWidget {
-
-
   static const routeName = '/todoForm';
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _estimatedTimeController = TextEditingController();
-  FormState  _formStateController;
-
+  FormState _formStateController;
 
   TodoForm(Todo _todo) {
     _formStateController = FormState.read;
     _titleController.text = _todo.title.toString();
     _descriptionController.text = _todo.description.toString();
     _estimatedTimeController.text = _todo.estimatedTime.toString();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +71,8 @@ class TodoForm extends StatelessWidget {
 
           // todo write own widget and add hear.
           new FloatingActionButton(
-            backgroundColor: Colors.green, child: Icon(Icons.done),
+            backgroundColor: Colors.green,
+            child: Icon(Icons.done),
             onPressed: this.markAsDone(),
           )
         ],
@@ -86,26 +80,32 @@ class TodoForm extends StatelessWidget {
     );
   }
 
-  bool isEnabled(){
-    return (_formStateController == FormState.create || _formStateController == FormState.update);
+  bool isEnabled() {
+    return (_formStateController == FormState.create ||
+        _formStateController == FormState.update);
   }
 
   void updateTask() {
     //TODO implement method to update entity in dataBase use controller.
 
-//    Todo todo = new Todo(
-//        id: this._id,
-//        title: _titleController.text,
-//        description: _descriptionController.text,
-//        estimatedTime: _estimatedTimeController.text);
-//    TodoEntity te = new TodoEntity();
-//    te.update(todo);
+    Todo todo = new Todo(
+      //id: this._id,
+      title: _titleController.text,
+      description: _descriptionController.text,
+      estimatedTime: _estimatedTimeController.text,
+      // startTime: '0',
+      //stopTime: '0',
+      // done: 'false'
+    );
+    TodoEntity te = new TodoEntity();
+    te.update(todo);
 //
-//    developer.log('saved to DB');
-//    Navigator.pushNamed(context, MainView.routeName);
+    developer.log('saved to DB');
+    //Navigator.pushNamed(context, MainView.routeName);
   }
 
   markAsDone() {
+    //developer.log('test saving');
     //TODO implement save task as done in model, think about use controler on task to perform this action.
   }
 }

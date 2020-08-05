@@ -31,7 +31,7 @@ class Persistence {
       path.path,
     );
 //todo change version if add new table
-    _db = await openDatabase(dbPath, version: 1);
+    _db = await openDatabase(dbPath, version: 2);
   }
 
   Future _create(Database db, int version) async {
@@ -46,8 +46,8 @@ class Persistence {
     await db.execute("""
             CREATE TABLE work_time (
              id INTEGER PRIMARY KEY,
-             start TEXT,
-             time_passed TEXT,
+             startTime TEXT,
+             stopTime TEXT,
              done BOOLEAN default FALSE,
              CONSTRAINT fk_todo
                 FOREIGN KEY (todo_id)

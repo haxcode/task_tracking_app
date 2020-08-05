@@ -74,6 +74,9 @@ class TodoCreateFormState extends State<TodoCreateForm> {
         title: _titleController.text,
         description: _descriptionController.text,
         estimatedTime: _estimatedTimeController.text,
+        //startTime: '0',
+        //stopTime: '0',
+        //done: 'false',
     );
     TodoEntity te = new TodoEntity();
     te.insert(todo);

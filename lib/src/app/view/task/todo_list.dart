@@ -29,6 +29,24 @@ class TodoListState extends State<TodoList> {
 
   // This will be called each time the + button is pressed
 
+  void _showSnackBar(String value) {
+    Scaffold.of(context).showSnackBar(new SnackBar(
+        content: new Text(value)
+    ));
+  }
+
+//  void _showSnackBarDelete(String value, Todo todo) {
+//    Scaffold.of(context).showSnackBar(new SnackBar(
+//        content: new Text(value),
+//      action: SnackBarAction(
+//      label: 'yes',
+//      onPressed: () {
+//          return 1;
+//      },
+//    ),
+//    ));
+//  }
+
   // Build the whole list of todo items
   Widget _buildTodoList() {
     return new FutureBuilder<List<Todo>>(
@@ -46,6 +64,7 @@ class TodoListState extends State<TodoList> {
       },
     );
   }
+
 
   Widget _listView(List<Todo> todoData){
     return new ListView.builder(
@@ -90,7 +109,8 @@ class TodoListState extends State<TodoList> {
           caption: 'Done',
           color: Colors.green,
           icon: Icons.assignment_turned_in,
-          //onTap: () => _showSnackBar('More'),
+          onTap: () => _showSnackBar('More'),
+
         ),
         IconSlideAction(
           caption: 'Delete',
@@ -98,7 +118,8 @@ class TodoListState extends State<TodoList> {
           icon: Icons.delete_outline,
           onTap: () => {
             TodoItem.deleteTodo(todo),
-            Navigator.pushNamed(context, MainView.routeName)
+            Navigator.pushNamed(context, MainView.routeName),
+            _showSnackBar('Deleted')
           },
         ),
       ],
