@@ -32,9 +32,9 @@ class TodoEntity extends Persistence {
         title: maps[i]['title'],
         description: maps[i]['description'],
         estimatedTime: maps[i]['estimatedTime'],
-        startTime: maps[i]['startTime'],
-        stopTime: maps[i]['stopTime'],
-        done: maps[i]['done'],
+        //startTime: maps[i]['startTime'],
+        //stopTime: maps[i]['stopTime'],
+        //done: maps[i]['done'],
       );
     });
   }
