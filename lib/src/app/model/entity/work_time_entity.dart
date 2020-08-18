@@ -2,7 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:task_tracking_app/src/app/model/work_time.dart';
 import 'package:task_tracking_app/src/inf/persistence.dart';
 
-class work_time_Entity extends Persistence {
+class WorkTimeEntity extends Persistence {
 
   Future<void> insert(WorkTime workTime) async {
     // Get a reference to the database.
@@ -29,12 +29,9 @@ class work_time_Entity extends Persistence {
     return List.generate(maps.length, (i) {
       return WorkTime(
         id: maps[i]['id'],
+        todoId: maps[i]['todo_id'],
         startTime: maps[i]['startTime'],
         stopTime: maps[i]['stopTime'],
-        done: maps[i]['done'],
-        //startTime: maps[i]['startTime'],
-        //stopTime: maps[i]['stopTime'],
-        //done: maps[i]['done'],
       );
     });
   }
@@ -60,9 +57,7 @@ class work_time_Entity extends Persistence {
     await db.update(
       'work_time',
       workTime.toMap(),
-      // Ensure that the Dog has a matching id.
       where: "id = ?",
-      // Pass the Dog's id as a whereArg to prevent SQL injection.
       whereArgs: [workTime.id],
     );
   }

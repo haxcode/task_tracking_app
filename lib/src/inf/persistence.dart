@@ -9,7 +9,7 @@ class Persistence {
 
   String _databaseName = "task_tracking_database.db";
   // TODO change hear
-  int _databaseVersion = 1;
+  int _databaseVersion = 4;
 
   Future<Database> get database async {
     if (_db != null) return _db;
@@ -31,7 +31,7 @@ class Persistence {
       path.path,
     );
 //todo change version if add new table
-    _db = await openDatabase(dbPath, version: 2);
+    _db = await openDatabase(dbPath, version: 4);
   }
 
   Future _create(Database db, int version) async {
@@ -40,7 +40,8 @@ class Persistence {
               id INTEGER PRIMARY KEY, 
               title TEXT NOT NULL,
               description TEXT,
-              estimatedTime TEXT
+              estimatedTime TEXT,
+              done INTEGER
             )""");
 //TODO add definition of table
     await db.execute("""
@@ -48,12 +49,7 @@ class Persistence {
              id INTEGER PRIMARY KEY,
              startTime TEXT,
              stopTime TEXT,
-             done BOOLEAN default FALSE,
-             CONSTRAINT fk_todo
-                FOREIGN KEY (todo_id)
-                REFERENCES todos (todo_id)
-//               hear this same add definition of table to register time
-//               start time, stop time, reference to todo,
+             todo_id INTEGER           
             )""");
   }
 }

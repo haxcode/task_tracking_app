@@ -3,9 +3,9 @@ import 'package:task_tracking_app/src/app/controller/todo_Item.dart';
 import 'package:task_tracking_app/src/app/model/entity/todo_entity.dart';
 import 'package:task_tracking_app/src/app/model/todo.dart';
 import 'package:task_tracking_app/src/app/view/main_view.dart';
-import 'package:task_tracking_app/src/app/view/task/todo_create_form.dart';
+import 'package:task_tracking_app/src/app/view/task/todo_editable_form.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:task_tracking_app/src/app/view/task/todo_form.dart';
+
 
 class TodoList extends StatefulWidget {
 
@@ -26,6 +26,17 @@ class TodoListState extends State<TodoList> {
     todos = _todoEntity.todo();
   }
 
+  Future<void> _getData() async {
+    setState(() {
+      fetchTodo();
+    });
+  }
+
+  void fetchTodo() async {
+    setState(() {
+      todos = _todoEntity.todo();
+    });
+  }
 
   // This will be called each time the + button is pressed
 
@@ -67,12 +78,16 @@ class TodoListState extends State<TodoList> {
 
 
   Widget _listView(List<Todo> todoData){
-    return new ListView.builder(
+    return todoData.length != 0
+        ? RefreshIndicator(
+        child: ListView.builder(
         itemCount: todoData.length,
         itemBuilder: (context, index) {
           return _buildTodoItem(todoData[index]);
         }
-      );
+      ),
+        onRefresh: _getData)
+        : Center(child: CircularProgressIndicator());
   }
 
   // Build a single todo item
@@ -84,7 +99,7 @@ class TodoListState extends State<TodoList> {
         color: Colors.white,
         child: ListTile(
           onTap: () => {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => TodoForm(todo)))
+            Navigator.push(context, MaterialPageRoute(builder: (context) => TodoEditableForm(todo: todo)))
           },
           leading: CircleAvatar(
             backgroundColor: Colors.blueAccent,
@@ -150,7 +165,7 @@ class TodoListState extends State<TodoList> {
       floatingActionButton: new FloatingActionButton(
         onPressed: (){   Navigator.pushNamed(
           context,
-          TodoCreateForm.routeName,
+          TodoEditableForm.routeName,
         );},
         tooltip: 'Add task',
         child: new Icon(Icons.add),

@@ -34,7 +34,7 @@ class TodoEntity extends Persistence {
         estimatedTime: maps[i]['estimatedTime'],
         //startTime: maps[i]['startTime'],
         //stopTime: maps[i]['stopTime'],
-        //done: maps[i]['done'],
+        done: maps[i]['done'],
       );
     });
   }
@@ -80,14 +80,18 @@ class TodoEntity extends Persistence {
     );
   }
 
-  Future<void> read(int id) async {
+  Future<Todo> getTodo(int id) async {
     final db = await database;
-
-    //await db.read(
-    //  'todo',
-    //  where: "id = ?",
-
-     // whereArgs: [id],
-    //);
+    List<Map> maps = await db.query('todo', where: "id = ?", whereArgs: [id]);
+    if (maps.length > 0) {
+      return Todo(  id: maps.first['id'],
+        title: maps.first['title'],
+        description: maps.first['description'],
+        done: maps.first['done'],
+        estimatedTime:  maps.first['estimatedTime'],);
+    }
+    return null;
   }
+
+
 }

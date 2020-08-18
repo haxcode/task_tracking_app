@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_tracking_app/src/app/view/main_view.dart';
-
-import 'task/todo_create_form.dart';
+import 'package:task_tracking_app/src/app/view/task/todo_editable_form.dart';
 
 
 class TaskTrackingApp extends StatelessWidget {
@@ -14,7 +13,7 @@ class TaskTrackingApp extends StatelessWidget {
           home: new MainView(),
           routes: {
             MainView.routeName:(context) => MainView(),
-            TodoCreateForm.routeName:(context) => TodoCreateForm(),
+            TodoEditableForm.routeName:(context) => TodoEditableForm(),
 
           },
 

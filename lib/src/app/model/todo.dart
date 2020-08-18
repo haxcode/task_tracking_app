@@ -7,11 +7,12 @@ class Todo {
   final String title;
   final String description;
   final String estimatedTime;
+  final int done;
   //final String startTime;
  // final String stopTime;
   //final String done;
 
-  Todo({this.id, this.title, this.description, this.estimatedTime});
+  Todo({this.id, this.title, this.description, this.estimatedTime, this.done});
 
   Map<String, dynamic> toMap() {
     return  {
@@ -21,7 +22,7 @@ class Todo {
       "estimatedTime":estimatedTime,
       //"startTime":startTime,
       //"stopTime":stopTime,
-      //"done":done,
+      "done":done,
     };
   }
 

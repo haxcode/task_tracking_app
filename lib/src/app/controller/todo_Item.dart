@@ -19,9 +19,9 @@ class TodoItem {
     db.update(todo);
   }
 
-  static void readTodo(Todo todo) {
+  static TodoItem readTodo(Todo todo) {
     TodoEntity db = new TodoEntity();
-    db.read(todo.id);
+    db.getTodo(todo.id);
   }
   //todo add full crud hear
 
