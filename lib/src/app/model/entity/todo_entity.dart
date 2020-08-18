@@ -1,6 +1,8 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:task_tracking_app/src/app/model/todo.dart';
 import 'package:task_tracking_app/src/inf/persistence.dart';
+import 'dart:developer' as developer;
+
 
 class TodoEntity extends Persistence {
 
@@ -56,13 +58,12 @@ class TodoEntity extends Persistence {
     // Get a reference to the database.
     final db = await database;
 
-    // Update the given Dog.
     await db.update(
       'todo',
       todo.toMap(),
       // Ensure that the Dog has a matching id.
       where: "id = ?",
-      // Pass the Dog's id as a whereArg to prevent SQL injection.
+      // Pass the id as a whereArg to prevent SQL injection.
       whereArgs: [todo.id],
     );
   }
@@ -71,11 +72,10 @@ class TodoEntity extends Persistence {
     // Get a reference to the database.
     final db = await database;
 
-    // Remove the Dog from the database.
+    // Remove from the database.
     await db.delete(
       'todo',
       where: "id = ?",
-
       whereArgs: [id],
     );
   }
@@ -84,6 +84,7 @@ class TodoEntity extends Persistence {
     final db = await database;
     List<Map> maps = await db.query('todo', where: "id = ?", whereArgs: [id]);
     if (maps.length > 0) {
+      developer.log( "pobrano $id coś się zapisało");
       return Todo(  id: maps.first['id'],
         title: maps.first['title'],
         description: maps.first['description'],
