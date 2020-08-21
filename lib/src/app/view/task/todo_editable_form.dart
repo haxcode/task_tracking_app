@@ -1,11 +1,11 @@
 import 'dart:developer' as developer;
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:task_tracking_app/src/app/controller/todo_Item.dart';
+import 'package:task_tracking_app/main.dart';
 import 'package:task_tracking_app/src/app/model/entity/todo_entity.dart';
 import 'package:task_tracking_app/src/app/model/todo.dart';
 import 'package:task_tracking_app/src/app/view/main_view.dart';
-import 'package:task_tracking_app/src/app/view/task/todo_list.dart';
 
 class TodoEditableForm extends StatefulWidget {
   static const routeName = '/todoForm';
@@ -36,6 +36,8 @@ class TodoEditableFormState extends State<TodoEditableForm> {
   String title = "Details";
 
   Null Function() action;
+
+  String timeString = "00:00:00";
 
   TodoEditableFormState(Todo _todo) {
     this._todo = _todo;
@@ -138,6 +140,77 @@ class TodoEditableFormState extends State<TodoEditableForm> {
           const Divider(
             height: 1.0,
           ),
+          new ListTile(
+            title: Text(
+              'Register your time!',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          new Expanded(
+              child: new Column(
+            children: <Widget>[
+              new Expanded(
+                flex: 6,
+                child: new Container(
+                  child: new Text(
+                    this.timeString,
+                    style: new TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 36),
+                  ),
+                ),
+              ),
+              new Expanded(
+                  flex: 12,
+                  child: Column(children: [
+                    Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            height: 100,
+                            width: 100,
+                            child: Padding(
+                              child: FloatingActionButton(
+                                child: Icon(Icons.close),
+                                backgroundColor: Colors.redAccent,
+                                heroTag:"close",
+                                onPressed: () {},
+                              ),
+                              padding: EdgeInsets.fromLTRB(25, 25, 25, 0),
+                            ),
+                          ),
+                          Container(
+                            height: 100,
+                            width: 100,
+                            child: Padding(
+                              child: FloatingActionButton(
+                                child: Icon(Icons.play_arrow),
+                                heroTag:"play",
+                                backgroundColor: Colors.green,
+                                onPressed: () {},
+                              ),
+                              padding: EdgeInsets.fromLTRB(12.5,25, 12.5, 0),
+                            ),
+                          ),
+                          Container(
+                            height: 100,
+                            width: 100,
+                            child: Padding(
+                              child: FloatingActionButton(
+                                child: Icon(Icons.save),
+                                backgroundColor: Colors.blue,
+                                heroTag:"save",
+                                onPressed: () {},
+                              ),
+                              padding: EdgeInsets.fromLTRB(25, 25, 25, 0),
+                            ),
+                          ),
+                        ])
+                  ]))
+            ],
+          ))
+          //todo add component to register time
         ],
       ),
     );

@@ -98,14 +98,14 @@ class TodoListState extends State<TodoList> {
                       builder: (context) => TodoEditableForm(todo: todo)))
             },
             leading: CircleAvatar(
-              backgroundColor: (todo.done == 0)?Colors.blueAccent:Colors.lightGreen,
-              child: Text(todo.done.toString()), // Icon(Icons.today),
+              backgroundColor: (todo.done.toInt() == 0)?Colors.blueAccent:Colors.green,
+              child: Text((todo.done.toInt() == 0)?"B":"D"), // Icon(Icons.today),
               foregroundColor: Colors.white,
             ),
             trailing: Text(todo.estimatedTime.toLowerCase()),
             title: Text(todo.title.toString()),
             subtitle: Text(todo.description.toString()),
-            enabled: (todo.done == 0),
+//            enabled: (todo.done == 0),
           ),
         ),
         actions: <Widget>[
@@ -123,8 +123,11 @@ class TodoListState extends State<TodoList> {
             icon: Icons.assignment_turned_in,
             onTap: () => {
               setState(() {
-                 TodoItem.doneTask(todo.id);
-                 _showSnackBar('Done');
+                Todo newTodo = TodoItem.doneTask(todo);
+                todos.then((value) => value.remove(todo));
+                todos.then((value) => value.add(newTodo));
+
+                _showSnackBar('Done');
               })
             },
           ),
@@ -133,9 +136,12 @@ class TodoListState extends State<TodoList> {
             color: Colors.redAccent,
             icon: Icons.delete_outline,
             onTap: () => {
-              TodoItem.deleteTodo(todo),
-              Navigator.pushNamed(context, MainView.routeName),
-              _showSnackBar('Deleted')
+              setState((){
+                TodoItem.deleteTodo(todo);
+                todos.then((value) => value.removeWhere((element) => (element.id == todo.id)));
+                _showSnackBar('Deleted');
+              }),
+//                Navigator.pushNamed(context, MainView.routeName),
             },
           )
         ]);

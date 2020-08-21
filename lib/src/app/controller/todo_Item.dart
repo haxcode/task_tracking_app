@@ -24,24 +24,19 @@ class TodoItem {
     db.getTodo(todo.id);
   }
 
-  static void doneTask(int id)  {
+  static Todo doneTask(Todo todo) {
     TodoEntity db = new TodoEntity();
-    developer.log( "start");
-    Future<Todo> todoFeature = db.getTodo(id);
-    developer.log( "pobrano $id coś się zapisało");
-    todoFeature.then((value) => () {
-      developer.log( "assync $value coś się zapisało");
-      Todo todo = new Todo(
-          id: value.id,
-          title: value.title,
-          description: value.description,
-          estimatedTime: value.estimatedTime,
-          done: 1);
-      db.update(todo);
-      developer.log(value.id.toString() + "coś się zapisało");
+    Todo newTodo = new Todo(
+        id: todo.id,
+        title: todo.title,
+        description: todo.description,
+        estimatedTime: todo.estimatedTime,
+        done: 1
+    );
 
-    });
-  }
+    db.update(newTodo);
+    return newTodo;
+}
 //todo add full crud hear
 
 }
