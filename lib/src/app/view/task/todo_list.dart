@@ -85,7 +85,7 @@ class TodoListState extends State<TodoList> {
         : Center(child:Column(
         children: <Widget>[
           Container(child: Icon(Icons.view_list,size:64,color: Colors.grey) ,width: 75, height: 150 ,margin: EdgeInsets.fromLTRB(10, 100, 10, 0),),
-          Text("Backlog is empty")
+          Text("Backlog is empty",style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w700, fontSize: 24),)
         ],
     ) );
   }
