@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:task_tracking_app/src/app/controller/todo_Item.dart';
 import 'package:task_tracking_app/src/app/model/entity/todo_entity.dart';
@@ -80,7 +82,12 @@ class TodoListState extends State<TodoList> {
                   return _buildTodoItem(todoData[index]);
                 }),
             onRefresh: _getData)
-        : Center(child: CircularProgressIndicator());
+        : Center(child:Column(
+        children: <Widget>[
+          Container(child: Icon(Icons.view_list,size:64,color: Colors.grey) ,width: 75, height: 150 ,margin: EdgeInsets.fromLTRB(10, 100, 10, 0),),
+          Text("Backlog is empty")
+        ],
+    ) );
   }
 
   // Build a single todo item
