@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer' as developer;
 
 import 'package:flutter/cupertino.dart';
@@ -32,12 +33,83 @@ class TodoEditableFormState extends State<TodoEditableForm> {
   FormStateEnum _formStateController = FormStateEnum.create;
   Todo _todo;
   IconData icon;
+  var watch = Stopwatch();
+  final duration = const Duration(seconds: 1);
+  IconData startStopIcon = Icons.play_arrow;
 
   String title = "Details";
 
   Null Function() action;
 
   String timeString = "00:00:00";
+
+  bool startIsPressed = false;
+  bool restartIsPressed = false;
+  Timer timer;
+
+  void startTimer() {
+    timer = Timer(this.duration, keepRunning);
+  }
+
+  void keepRunning() {
+    if (watch.isRunning) {
+      startTimer();
+    }
+    refreshState();
+  }
+
+  void refreshState(){
+    setState(() {
+      timeString = watch.elapsed.inHours.toString().padLeft(2, "0") +
+          ":" +
+          (watch.elapsed.inMinutes % 60).toString().padLeft(2, "0") +
+          ":" +
+          (watch.elapsed.inSeconds % 60).toString().padLeft(2, "0");
+      startStopIcon = startIsPressed ? Icons.pause : Icons.play_arrow;
+    });
+  }
+
+  void startStopWatch() {
+    if(restartIsPressed){
+      if(watch.isRunning){
+        watch.stop();
+      }
+      watch.reset();
+      setState(() {
+        startIsPressed = false;
+        restartIsPressed = !restartIsPressed;
+      });
+      refreshState();
+
+    }else{
+      if (!startIsPressed) {
+        setState(() {
+          startIsPressed = true;
+        });
+        watch.start();
+        startTimer();
+
+      } else {
+        setState(() {
+          startIsPressed = false;
+        });
+        watch.stop();
+      }
+    }
+
+  }
+  @override
+  void dispose(){
+    if(watch.isRunning){
+      watch.stop();
+      if(timer.isActive){
+        timer.cancel();
+      }
+    }
+    watch.reset();
+    super.dispose();
+
+  }
 
   TodoEditableFormState(Todo _todo) {
     this._todo = _todo;
@@ -174,8 +246,11 @@ class TodoEditableFormState extends State<TodoEditableForm> {
                               child: FloatingActionButton(
                                 child: Icon(Icons.close),
                                 backgroundColor: Colors.redAccent,
-                                heroTag:"close",
-                                onPressed: () {},
+                                heroTag: "close",
+                                onPressed: () {
+                                  restartIsPressed = true;
+                                  startStopWatch();
+                                },
                               ),
                               padding: EdgeInsets.fromLTRB(25, 25, 25, 0),
                             ),
@@ -185,12 +260,14 @@ class TodoEditableFormState extends State<TodoEditableForm> {
                             width: 100,
                             child: Padding(
                               child: FloatingActionButton(
-                                child: Icon(Icons.play_arrow),
-                                heroTag:"play",
+                                child: Icon(startStopIcon, size: 36),
+                                heroTag: "playPause",
                                 backgroundColor: Colors.green,
-                                onPressed: () {},
+                                onPressed: () {
+                                  startStopWatch();
+                                },
                               ),
-                              padding: EdgeInsets.fromLTRB(12.5,25, 12.5, 0),
+                              padding: EdgeInsets.fromLTRB(12.5, 25, 12.5, 0),
                             ),
                           ),
                           Container(
@@ -200,7 +277,7 @@ class TodoEditableFormState extends State<TodoEditableForm> {
                               child: FloatingActionButton(
                                 child: Icon(Icons.save),
                                 backgroundColor: Colors.blue,
-                                heroTag:"save",
+                                heroTag: "save",
                                 onPressed: () {},
                               ),
                               padding: EdgeInsets.fromLTRB(25, 25, 25, 0),
