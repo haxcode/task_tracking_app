@@ -124,17 +124,20 @@ class TodoEditableFormState extends State<TodoEditableForm>
           startIsPressed = false;
         });
         watch.stop();
-        WorkTimeEntity workTimeEntity = WorkTimeEntity();
-          WorkTime newWT = WorkTime(
-              todoId: wt.todoId,
-              startTime: wt.startTime,
-              stopTime: DateTime.now().toIso8601String(),
-              duration: watch.elapsed.inSeconds.toInt(),
-              descryption: wt.descryption);
-          workTimeEntity.insert(newWT);
         }
 
       }
+    }
+
+    void saveTime(){
+      WorkTimeEntity workTimeEntity = WorkTimeEntity();
+      WorkTime newWT = WorkTime(
+          todoId: wt.todoId,
+          startTime: wt.startTime,
+          stopTime: DateTime.now().toIso8601String(),
+          duration: watch.elapsed.inSeconds.toInt(),
+          descryption: wt.descryption);
+      workTimeEntity.insert(newWT);
     }
 
 
@@ -326,7 +329,11 @@ class TodoEditableFormState extends State<TodoEditableForm>
                                       child: Icon(Icons.save),
                                       backgroundColor: Colors.blue,
                                       heroTag: "save",
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        setState(() {
+                                          saveTime();
+                                        });
+                                      },
                                     ),
                                     padding: EdgeInsets.fromLTRB(25, 25, 25, 0),
                                   ),
