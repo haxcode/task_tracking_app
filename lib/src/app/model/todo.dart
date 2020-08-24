@@ -7,7 +7,10 @@ class Todo {
   final String title;
   final String description;
   final String estimatedTime;
-  final bool done;
+  final int done;
+  //final String startTime;
+ // final String stopTime;
+  //final String done;
 
   Todo({this.id, this.title, this.description, this.estimatedTime, this.done});
 
@@ -17,7 +20,9 @@ class Todo {
       "title":title,
       "description":description,
       "estimatedTime":estimatedTime,
-      "done":done
+      //"startTime":startTime,
+      //"stopTime":stopTime,
+      "done":done,
     };
   }
 
