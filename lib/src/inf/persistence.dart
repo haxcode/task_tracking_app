@@ -9,7 +9,7 @@ class Persistence {
 
   String _databaseName = "task_tracking_database.db";
   // TODO change hear
-  int _databaseVersion = 4;
+  int _databaseVersion = 5;
 
   Future<Database> get database async {
     if (_db != null) return _db;
@@ -31,7 +31,7 @@ class Persistence {
       path.path,
     );
 //todo change version if add new table
-    _db = await openDatabase(dbPath, version: 4);
+    _db = await openDatabase(dbPath, version: 5);
   }
 
   Future _create(Database db, int version) async {
@@ -49,6 +49,8 @@ class Persistence {
              id INTEGER PRIMARY KEY,
              startTime TEXT,
              stopTime TEXT,
+             duration INTEGER,
+             descryption TEXT,
              todo_id INTEGER           
             )""");
   }

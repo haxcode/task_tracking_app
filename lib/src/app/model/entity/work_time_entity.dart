@@ -4,6 +4,7 @@ import 'package:task_tracking_app/src/inf/persistence.dart';
 
 class WorkTimeEntity extends Persistence {
 
+
   Future<void> insert(WorkTime workTime) async {
     // Get a reference to the database.
     final Database db = await database;
@@ -31,6 +32,53 @@ class WorkTimeEntity extends Persistence {
         id: maps[i]['id'],
         todoId: maps[i]['todo_id'],
         startTime: maps[i]['startTime'],
+        descryption: maps[i]['descryption'],
+        duration: maps[i]['duration'],
+        stopTime: maps[i]['stopTime'],
+      );
+    });
+  }
+
+
+  Future<List<WorkTime>> workTimeFiltered(int todoId) async {
+    // Get a reference to the database.
+    final Database db = await database;
+
+    // Query the table for all The todo.
+    final List<Map<String, dynamic>> maps = await db.query('work_time',where: 'todo_id = ?',whereArgs: [todoId]);
+
+    // Convert the List<Map<String, dynamic> into a List<Todo>.
+    return List.generate(maps.length, (i) {
+      return WorkTime(
+        id: maps[i]['id'],
+        todoId: maps[i]['todo_id'],
+        startTime: maps[i]['startTime'],
+        descryption: maps[i]['descryption'],
+        duration: maps[i]['duration'],
+        stopTime: maps[i]['stopTime'],
+      );
+    });
+  }
+
+  Future<List<WorkTime>> workTimeByID(int id) async {
+    // Get a reference to the database.
+    final Database db = await database;
+
+    // Query the table for all The todo.
+    final List<Map<String, dynamic>> maps = await db.query(
+      'work_time',
+      where: "id = ?",
+      whereArgs: [id],
+    );
+
+    // Convert the List<Map<String, dynamic> into a List<Todo>.
+    return List.generate(maps.length, (i) {
+      return WorkTime(
+        id: maps[i]['id'],
+        todoId: maps[i]['todo_id'],
+        startTime: maps[i]['startTime'],
+        descryption: maps[i]['descryption'],
+        duration: maps[i]['duration'],
         stopTime: maps[i]['stopTime'],
       );
     });
@@ -59,30 +107,43 @@ class WorkTimeEntity extends Persistence {
       workTime.toMap(),
       where: "id = ?",
       whereArgs: [workTime.id],
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  Future<void> delete(int id) async {
+  Future<WorkTime> getLast(int todoId) async {
+    // Get a reference to the database.
+    final db = await database;
+
+    // Update the given Dog.
+    final List<Map<String, dynamic>> maps = await db.query(
+      'work_time',
+      where: "todo_id = ? ",
+      whereArgs: [todoId],
+      orderBy: 'id',
+      limit: 1
+    );
+
+
+      return WorkTime(
+        id: maps.first['id'],
+        todoId: maps.first['todo_id'],
+        startTime: maps.first['startTime'],
+        descryption: maps.first['descryption'],
+        stopTime: maps.first['stopTime'],
+      );
+
+  }
+
+  Future<void> delete(WorkTime workTime) async {
     // Get a reference to the database.
     final db = await database;
 
     // Remove the Dog from the database.
     await db.delete(
-      'workTime',
+      'work_time',
       where: "id = ?",
-
-      whereArgs: [id],
+      whereArgs: [workTime.id],
     );
-  }
-
-  Future<void> read(int id) async {
-    final db = await database;
-
-    //await db.read(
-    //  'todo',
-    //  where: "id = ?",
-
-    // whereArgs: [id],
-    //);
   }
 }
