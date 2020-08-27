@@ -9,6 +9,7 @@ import 'package:task_tracking_app/src/app/model/work_time.dart';
 import 'package:task_tracking_app/src/app/view/main_view.dart';
 import 'package:task_tracking_app/src/app/view/task/todo_editable_form.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 
 class WorkTimeList extends StatefulWidget {
   var id;
@@ -30,11 +31,12 @@ class WorkTimeListState extends State<WorkTimeList> {
 
   var _id;
 
-  WorkTimeListState(id);
+  WorkTimeListState(id){
+    this._id = id;
+  }
 
   @override
   void initState() {
-
     fetchTodos(this._id);
     super.initState();
   }
@@ -50,7 +52,7 @@ class WorkTimeListState extends State<WorkTimeList> {
       if (id == null) {
         workTimeItems = _workTimeEntity.workTime();
       } else {
-        workTimeItems = _workTimeEntity.workTimeByID(id);
+        workTimeItems = _workTimeEntity.workTimeFiltered(id);
       }
     });
   }
@@ -123,13 +125,16 @@ class WorkTimeListState extends State<WorkTimeList> {
               foregroundColor: Colors.white,
             ),
             trailing: Text(formatDuration(workTime.duration)),
-            title: Text(DateTime.parse(workTime.startTime.toString())
-                    .toLocal()
+            subtitle: Text(DateFormat('yyyy-MM-dd hh:mm:ss')
+                    .format(DateTime.parse(workTime.startTime.toString()))
+                    //.toLocal()
                     .toString() +
                 " - " +
-                DateTime.parse(workTime.stopTime.toString())
-                    .toLocal()
+                DateFormat('yyyy-MM-dd hh:mm:ss')
+                    .format(DateTime.parse(workTime.stopTime.toString()))
+                    //.toLocal()
                     .toString()),
+            title: Text(workTime.descryption),
           ),
         ),
         secondaryActions: <Widget>[

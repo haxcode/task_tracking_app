@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:task_tracking_app/src/app/view/about.dart';
+import 'package:task_tracking_app/src/app/view/backlog_view.dart';
 import 'package:task_tracking_app/src/app/view/task/todo_list.dart';
+import 'package:task_tracking_app/src/app/view/work_time_view.dart';
 
+import 'done_view.dart';
 
 class MainView extends StatelessWidget {
   static const routeName = '/daily';
@@ -14,7 +17,7 @@ class MainView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(title),
         backgroundColor: Colors.blueAccent,),
-      body: TodoList(),
+      body: TodoList(null),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -43,7 +46,7 @@ class MainView extends StatelessWidget {
               title: Text('Backlog'),
               onTap: () {
              
-//                Navigator.pop(context);
+                Navigator.popAndPushNamed(context, BacklogView.routeName);
               },
             ),
             ListTile(
@@ -52,7 +55,7 @@ class MainView extends StatelessWidget {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
-                Navigator.pop(context);
+                Navigator.popAndPushNamed(context, DoneView.routeName);
               },
             ),
             ListTile(
@@ -61,7 +64,7 @@ class MainView extends StatelessWidget {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
-                Navigator.pop(context);
+                Navigator.popAndPushNamed(context, WorkTimeView.routeName);
               },
             ),
               ListTile(

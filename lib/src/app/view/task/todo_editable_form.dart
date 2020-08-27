@@ -11,6 +11,7 @@ import 'package:task_tracking_app/src/app/model/work_time.dart';
 import 'package:task_tracking_app/src/app/view/main_view.dart';
 import 'package:task_tracking_app/src/app/view/task/todo_list.dart';
 import 'package:task_tracking_app/src/app/view/task/work_time_list.dart';
+import 'package:intl/intl.dart';
 
 class TodoEditableForm extends StatefulWidget {
   static const routeName = '/todoForm';
@@ -25,7 +26,7 @@ class TodoEditableForm extends StatefulWidget {
           id: null,
           title: "",
           description: "",
-          estimatedTime: "1d",
+          estimatedTime: "1d 00:00",
           done: 0);
     }
     return TodoEditableFormState(this.todo);
@@ -67,7 +68,6 @@ class TodoEditableFormState extends State<TodoEditableForm>
 
   WorkTime wt;
 
-
   @override
   void initState() {
     tb = TabController(length: tabs.length, vsync: this);
@@ -97,7 +97,7 @@ class TodoEditableFormState extends State<TodoEditableForm>
   }
 
   void startStopWatch() {
-    developer.log("startStopWatch was pressed !!!!");
+    //developer.log("startStopWatch was pressed !!!!");
     if (restartIsPressed) {
       if (watch.isRunning) {
         watch.stop();
@@ -118,28 +118,30 @@ class TodoEditableFormState extends State<TodoEditableForm>
         wt = WorkTime(
             todoId: this._todo.id,
             startTime: DateTime.now().toIso8601String(),
-            descryption: "Time from work time register stopwatch");
+            descryption: this._todo.title);
       } else {
         setState(() {
           startIsPressed = false;
         });
         watch.stop();
-        }
-
       }
     }
+  }
 
-    void saveTime(){
-      WorkTimeEntity workTimeEntity = WorkTimeEntity();
-      WorkTime newWT = WorkTime(
-          todoId: wt.todoId,
-          startTime: wt.startTime,
-          stopTime: DateTime.now().toIso8601String(),
-          duration: watch.elapsed.inSeconds.toInt(),
-          descryption: wt.descryption);
-      workTimeEntity.insert(newWT);
-    }
-
+  void saveTime() {
+    WorkTimeEntity workTimeEntity = WorkTimeEntity();
+    WorkTime newWT = WorkTime(
+        todoId: wt.todoId,
+        startTime: wt.startTime,
+        stopTime: DateTime.now().toIso8601String(),
+        duration: watch.elapsed.inSeconds.toInt(),
+        descryption: wt.descryption);
+    workTimeEntity.insert(newWT);
+    setState(() {
+      restartIsPressed = true;
+      startStopWatch();
+    });
+  }
 
   @override
   void dispose() {
@@ -271,77 +273,76 @@ class TodoEditableFormState extends State<TodoEditableForm>
             ),
             new Expanded(
                 child: new Column(
-                  children: <Widget>[
-                    new Expanded(
-                      flex: 6,
-                      child: new Container(
-                        child: new Text(
-                          this.timeString,
-                          style: new TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 36),
-                        ),
-                      ),
+              children: <Widget>[
+                new Expanded(
+                  flex: 6,
+                  child: new Container(
+                    child: new Text(
+                      this.timeString,
+                      style: new TextStyle(
+                          fontWeight: FontWeight.w600, fontSize: 36),
                     ),
-                    new Expanded(
-                        flex: 12,
-                        child: Column(children: [
-                          Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  height: 100,
-                                  width: 100,
-                                  child: Padding(
-                                    child: FloatingActionButton(
-                                      child: Icon(Icons.close),
-                                      backgroundColor: Colors.redAccent,
-                                      heroTag: "close",
-                                      onPressed: () {
-                                        restartIsPressed = true;
-                                        startStopWatch();
-                                      },
-                                    ),
-                                    padding: EdgeInsets.fromLTRB(25, 25, 25, 0),
-                                  ),
+                  ),
+                ),
+                new Expanded(
+                    flex: 12,
+                    child: Column(children: [
+                      Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              height: 100,
+                              width: 100,
+                              child: Padding(
+                                child: FloatingActionButton(
+                                  child: Icon(Icons.close),
+                                  backgroundColor: Colors.redAccent,
+                                  heroTag: "close",
+                                  onPressed: () {
+                                    restartIsPressed = true;
+                                    startStopWatch();
+                                  },
                                 ),
-                                Container(
-                                  height: 100,
-                                  width: 100,
-                                  child: Padding(
-                                    child: FloatingActionButton(
-                                      child: Icon(startStopIcon, size: 36),
-                                      heroTag: "playPause",
-                                      backgroundColor: Colors.green,
-                                      onPressed: () {
-                                        startStopWatch();
-                                      },
-                                    ),
-                                    padding: EdgeInsets.fromLTRB(
-                                        12.5, 25, 12.5, 0),
-                                  ),
+                                padding: EdgeInsets.fromLTRB(25, 25, 25, 0),
+                              ),
+                            ),
+                            Container(
+                              height: 100,
+                              width: 100,
+                              child: Padding(
+                                child: FloatingActionButton(
+                                  child: Icon(startStopIcon, size: 36),
+                                  heroTag: "playPause",
+                                  backgroundColor: Colors.green,
+                                  onPressed: () {
+                                    startStopWatch();
+                                  },
                                 ),
-                                Container(
-                                  height: 100,
-                                  width: 100,
-                                  child: Padding(
-                                    child: FloatingActionButton(
-                                      child: Icon(Icons.save),
-                                      backgroundColor: Colors.blue,
-                                      heroTag: "save",
-                                      onPressed: () {
-                                        setState(() {
-                                          saveTime();
-                                        });
-                                      },
-                                    ),
-                                    padding: EdgeInsets.fromLTRB(25, 25, 25, 0),
-                                  ),
+                                padding: EdgeInsets.fromLTRB(12.5, 25, 12.5, 0),
+                              ),
+                            ),
+                            Container(
+                              height: 100,
+                              width: 100,
+                              child: Padding(
+                                child: FloatingActionButton(
+                                  child: Icon(Icons.save),
+                                  backgroundColor: Colors.blue,
+                                  heroTag: "save",
+                                  onPressed: () {
+                                    setState(() {
+                                      saveTime();
+                                    });
+                                  },
                                 ),
-                              ])
-                        ]))
-                  ],
-                )),
+                                padding: EdgeInsets.fromLTRB(25, 25, 25, 0),
+                              ),
+                            ),
+                          ])
+                    ]))
+              ],
+            )),
           ]),
 //          Column(children: [Text('Work time ')])
           WorkTimeList(_todo.id),
@@ -369,7 +370,7 @@ class TodoEditableFormState extends State<TodoEditableForm>
     //TODO implement method to update entity in dataBase use controller.
     developer.log(_todo.id.toString() + " task id");
     Todo todo = new Todo(
-      //to musi zostać dodane ( bo do tego id bedzemy updatowac)
+        //to musi zostać dodane ( bo do tego id bedzemy updatowac)
         id: _todo.id,
         title: _titleController.text,
         description: _descriptionController.text,
@@ -380,15 +381,14 @@ class TodoEditableFormState extends State<TodoEditableForm>
 
     Future<Todo> newTodo = te.getTodo(_todo.id);
 
-    newTodo.then((data) =>
-    {
+    newTodo.then((data) => {
           () {
-        this._todo = data;
-        this._estimatedTimeController.text = data.estimatedTime;
-        this._descriptionController.text = data.description;
-        this._titleController.text = data.title;
-      }
-    });
+            this._todo = data;
+            this._estimatedTimeController.text = data.estimatedTime;
+            this._descriptionController.text = data.description;
+            this._titleController.text = data.title;
+          }
+        });
 //
 
     developer.log('saved to DB');
