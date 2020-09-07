@@ -12,10 +12,11 @@ class DoneView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title),
-        backgroundColor: Colors.blueAccent,),
+      appBar: AppBar(
+        title: Text(title),
+        backgroundColor: Colors.blueAccent,
+      ),
       body: TodoList(1),
-
     );
   }
 }

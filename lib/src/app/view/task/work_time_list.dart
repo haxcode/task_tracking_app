@@ -31,7 +31,7 @@ class WorkTimeListState extends State<WorkTimeList> {
 
   var _id;
 
-  WorkTimeListState(id){
+  WorkTimeListState(id) {
     this._id = id;
   }
 

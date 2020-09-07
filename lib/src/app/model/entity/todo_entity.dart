@@ -39,19 +39,6 @@ class TodoEntity extends Persistence {
     });
   }
 
-//  final List<Map<String, dynamic>> maps = await db.query('work_time');
-//
-//  // Convert the List<Map<String, dynamic> into a List<Todo>.
-//  return List.generate(maps.length, (i) {
-//  return Work_time(
-//  id: maps[i]['id'],
-//  startTime: maps[i]['startTime'],
-//  stopTime: maps[i]['stopTime'],
-//  done: maps[i]['done'],
-//  );
-//  });
-//}
-
   Future<void> update(Todo todo) async {
     // Get a reference to the database.
     final db = await database;
@@ -98,7 +85,8 @@ class TodoEntity extends Persistence {
     final Database db = await database;
 
     // Query the table for all The todo.
-    final List<Map<String, dynamic>> maps = await db.query('todo', where: 'done = ?', whereArgs: [done]);
+    final List<Map<String, dynamic>> maps =
+        await db.query('todo', where: 'done = ?', whereArgs: [done]);
 
     // Convert the List<Map<String, dynamic> into a List<Todo>.
     return List.generate(maps.length, (i) {

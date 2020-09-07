@@ -15,13 +15,15 @@ class MainView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title),
-        backgroundColor: Colors.blueAccent,),
+      appBar: AppBar(
+        title: Text(title),
+        backgroundColor: Colors.blueAccent,
+      ),
       body: TodoList(null),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
-          children: <Widget> [
+          children: <Widget>[
             DrawerHeader(
               child: Icon(
                 Icons.timer,
@@ -29,9 +31,7 @@ class MainView extends StatelessWidget {
                 size: 100,
               ),
               decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  color: Colors.blueAccent
-              ),
+                  shape: BoxShape.rectangle, color: Colors.blueAccent),
             ),
             ListTile(
               title: Text('Daily'),
@@ -45,7 +45,6 @@ class MainView extends StatelessWidget {
             ListTile(
               title: Text('Backlog'),
               onTap: () {
-             
                 Navigator.popAndPushNamed(context, BacklogView.routeName);
               },
             ),
@@ -67,15 +66,18 @@ class MainView extends StatelessWidget {
                 Navigator.popAndPushNamed(context, WorkTimeView.routeName);
               },
             ),
-              ListTile(
-                title: Text('About'),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-               Navigator.push(context, MaterialPageRoute(builder: (context) => About()),);
-               //Navigator.pop(context);
-                },
+            ListTile(
+              title: Text('About'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => About()),
+                );
+                //Navigator.pop(context);
+              },
             ),
           ],
         ),

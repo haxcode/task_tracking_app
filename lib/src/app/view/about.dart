@@ -12,7 +12,7 @@ class About extends StatelessWidget {
           children: <Widget>[
             Text(
                 'Application created to track Your work progress. '
-                    'Alowing to count time spended on single task. \n \n'
+                'Alowing to count time spended on single task. \n \n'
                 'Authors: \n'
                 'Robert Kubica \n'
                 'Sebastian Przeliorz',

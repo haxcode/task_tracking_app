@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class WorkTime {
-
   final int id;
   final String startTime;
   final String stopTime;
@@ -9,18 +8,22 @@ class WorkTime {
   final String descryption;
   final int todoId;
 
-  WorkTime({this.id, this.todoId, this.startTime, this.stopTime,this.duration, this.descryption});
+  WorkTime(
+      {this.id,
+      this.todoId,
+      this.startTime,
+      this.stopTime,
+      this.duration,
+      this.descryption});
 
   Map<String, dynamic> toMap() {
-    return  {
+    return {
       "id": id,
-      "startTime":startTime,
-      "stopTime":stopTime,
-      "descryption":descryption,
-      "duration":duration,
+      "startTime": startTime,
+      "stopTime": stopTime,
+      "descryption": descryption,
+      "duration": duration,
       "todo_id": todoId
     };
   }
-
-
 }

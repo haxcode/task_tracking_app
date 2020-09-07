@@ -11,7 +11,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 class TodoList extends StatefulWidget {
   var _done;
 
-  TodoList(var done){
+  TodoList(var done) {
     this._done = done;
   }
 
@@ -23,7 +23,7 @@ class TodoListState extends State<TodoList> {
   TodoEntity _todoEntity = new TodoEntity();
   var _done;
 
-  TodoListState(var done){
+  TodoListState(var done) {
     this._done = done;
   }
 
@@ -31,10 +31,9 @@ class TodoListState extends State<TodoList> {
 
   @override
   void initState() {
-
-    if(this._done == null) {
+    if (this._done == null) {
       todos = _todoEntity.todo();
-    } else{
+    } else {
       todos = _todoEntity.getFiltered(this._done);
     }
     super.initState();
@@ -57,18 +56,6 @@ class TodoListState extends State<TodoList> {
   void _showSnackBar(String value) {
     Scaffold.of(context).showSnackBar(new SnackBar(content: new Text(value)));
   }
-
-//  void _showSnackBarDelete(String value, Todo todo) {
-//    Scaffold.of(context).showSnackBar(new SnackBar(
-//        content: new Text(value),
-//      action: SnackBarAction(
-//      label: 'yes',
-//      onPressed: () {
-//          return 1;
-//      },
-//    ),
-//    ));
-//  }
 
   // Build the whole list of todo items
   Widget _buildTodoList() {
@@ -97,12 +84,24 @@ class TodoListState extends State<TodoList> {
                   return _buildTodoItem(todoData[index]);
                 }),
             onRefresh: _getData)
-        : Center(child:Column(
-        children: <Widget>[
-          Container(child: Icon(Icons.view_list,size:64,color: Colors.grey) ,width: 75, height: 150 ,margin: EdgeInsets.fromLTRB(10, 100, 10, 0),),
-          Text("Backlog is empty",style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w700, fontSize: 24),)
-        ],
-    ) );
+        : Center(
+            child: Column(
+            children: <Widget>[
+              Container(
+                child: Icon(Icons.view_list, size: 64, color: Colors.grey),
+                width: 75,
+                height: 150,
+                margin: EdgeInsets.fromLTRB(10, 100, 10, 0),
+              ),
+              Text(
+                "Backlog is empty",
+                style: TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24),
+              )
+            ],
+          ));
   }
 
   // Build a single todo item
@@ -120,8 +119,10 @@ class TodoListState extends State<TodoList> {
                       builder: (context) => TodoEditableForm(todo: todo)))
             },
             leading: CircleAvatar(
-              backgroundColor: (todo.done.toInt() == 0)?Colors.blueAccent:Colors.green,
-              child: Text((todo.done.toInt() == 0)?"B":"D"), // Icon(Icons.today),
+              backgroundColor:
+                  (todo.done.toInt() == 0) ? Colors.blueAccent : Colors.green,
+              child: Text(
+                  (todo.done.toInt() == 0) ? "B" : "D"), // Icon(Icons.today),
               foregroundColor: Colors.white,
             ),
             trailing: Text(todo.estimatedTime.toLowerCase()),
@@ -157,9 +158,10 @@ class TodoListState extends State<TodoList> {
             color: Colors.redAccent,
             icon: Icons.delete_outline,
             onTap: () => {
-              setState((){
+              setState(() {
                 TodoItem.deleteTodo(todo);
-                todos.then((value) => value.removeWhere((element) => (element.id == todo.id)));
+                todos.then((value) =>
+                    value.removeWhere((element) => (element.id == todo.id)));
                 _showSnackBar('Deleted');
               }),
 //                Navigator.pushNamed(context, MainView.routeName),
